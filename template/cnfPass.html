@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="Soft Masr - Project">
+        <meta name="author" content="Ahmed ElShahat">
+        <title>MiniMart - Confirm your password</title>
+
+        <!-- Favico -->
+        <link rel="icon" type="image/png" href="template/assets/images/shopping.png">
+        
+        <!-- FontAwesome -->
+        <link href="template/assets/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- Bootstrap -->
+        <link href="template/assets/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Style -->
+        <link href="template/assets/css/style.css" rel="stylesheet">
+    </head>
+    <body class="admin-login">
+        <div class="container">
+
+                <div class="col-md-12">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4">
+                                <div class="page-header">
+                                    <h3> Createing A New Password </h3>
+                                </div>
+                                <?php if(isset($resetRes) && $resetRes !== "True"){ ?>
+                                    <div class="alert alert-danger">
+                                        <p> <?= $resetRes ?></p>
+                                    </div>
+                                <?php } ?>
+
+                                <?php if(isset($resetRes) && $resetRes === "True"){ ?>
+                                    <div class="alert alert-success">
+                                        <strong>Done:</strong>
+                                                <p> Your new Password has been set</p>
+                                                <?php header("refresh:3; url=login.php"); ?>
+                                    </div>
+                                <?php } ?>
+
+
+                                <form class="form-horizontal" action="cnfPass.php?mail=<?= $_GET['mail'] ?>" method="post">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            Type your New Password here
+                                            <br> <br>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-key"></i></div>
+                                                <input type="password" required class="form-control" name="pass_1" placeholder="New Password">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            Confirm your New Password here <br> <br>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-key"></i></div>
+                                                <input type="password" required class="form-control" name="pass_2" placeholder="Confirm Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                 
+                                    <div class="clearfix">
+                                        <button type="submit" name="cnf" class="btn btn-danger pull-right"><i class="fa fa-sign-in"></i> Confirm </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="template/assets/js/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="template/assets/js/bootstrap.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="Soft Masr - Project">
+        <meta name="author" content="Ahmed ElShahat">
+        <title>MiniMart - Buy</title>
+
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    	<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	    <link rel="stylesheet" type="text/css" href="template/assets/css/cart.css">
+
+        <!-- Favico -->
+        <link rel="icon" type="image/png" href="template/assets/images/shopping.png">
+        
+        <!-- FontAwesome -->
+        <link href="template/assets/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- Bootstrap -->
+        <link href="template/assets/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Style -->
+        <link href="template/assets/css/style.css" rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
+</head>
+<body>
+    <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav class="navbar navbar-default">
+                            <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="index.php"><img src="template/assets/images/minimart-logo.png" class="img-responsive" alt=""></a>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                <li><a href="index.php"> <strong>  <?= (! isset($_SESSION['email'])) ? "Guest View" : "Signed in as  | " . $_SESSION['name'] ?>  </strong></a></li>
+                                    <li><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                                    <li><a href="all-products.php">Products</a></li>
+                                    <li><a href="reviews.php">Reviews</a></li>
+                                    <li class="active"><a href="cart.php" class="fa fa-shopping-cart"> &nbsp; <strong> Your Cart </strong> </a></li>
+                                    <?php   if(isset($_SESSION['name'])){ ?>
+                                        <li><a href="logout.php">Logout!</a></li>
+                                   <?php  }else{ ?>
+                                        <li> <a href="login.php"> <u> You can't buy as a guest! Click here to </u> ( Login ) </a></li>
+                                   <?php } ?> 
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                                   </div>
+                <div class="col-md-12">
+                    <div class="jumbotron">
+                        <h1><i class="fa fa-question-circle "></i> Are you sure ?  </h1>
+                          
+                        <form autocomplete="off" action="charge.php" method="post">
+                    <input type="hidden" name="titles" value="<?= $_POST['titles'] ?>">
+                    <input type="hidden" name="amounts" value="<?= $_POST['amounts'] ?>">
+                    <input type="hidden" name="sum" value="<?= $_POST['sum'] ?>">
+                    <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key=""
+                        data-amount="<?= $_POST['sum'] * 100 ?>"
+                        data-name=Customer
+                        data-description="Payment Process"
+                        data-image="template/assets/images/stripe.png"
+                        data-currency="USD"
+                        data-locale="auto">
+                    </script>
+                </form>
+                
+                    </div>
+                    
+                </div>
+
+                &nbsp; &nbsp; &nbsp;
+                
+
+                <br> <br> <br> <br>
+
+                
+
+        <div class="container-fluid footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <div class="copyrights">
+                                <span>Coded by </span><a href="http://www.arabtouch.com.eg">Arab Touch</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>               
+        <script src="template/assets/js/js.js"></script>               
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="template/assets/js/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="template/assets/js/bootstrap.min.js"></script>
+</body>
+</html>

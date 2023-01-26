@@ -1,0 +1,106 @@
+<div class="admin-panel__content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-header">
+                <h1>Add Product</h1>
+            </div>
+
+            <?php if(@$edit_Res =='True') { ?>
+                <div class="alert alert-success">
+                    <p>Product updated successfully.</p>
+                    <?php echo('<strong> Done! </strong> .. You will be redirected to Products page again in 1 2 . .'); ?>
+                    <?php header("refresh:2; url=all-products.php"); ob_end_flush(); ?>
+                </div>
+            <?php }  ?>
+       
+        </div>
+        <div class="col-md-8">
+            <form class="form-horizontal" action="editProduct.php?id=<?=$_GET['id']?>" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="product-title" class="col-sm-3 control-label">Product Title</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="title" required class="form-control" id="product-title" value="<?= @$prods[0]['title'] ?>" placeholder="Product Title">
+                        <?php if(isset($newArr['title'])) { ?>
+                        <div class="alert alert-danger">
+                            <p>*Product Title is required.</p>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-desc" class="col-sm-3 control-label">Product Description</label>
+                    <div class="col-sm-9">
+                        <textarea rows="6" name="descriptionOfprod" required class="form-control" id="product-desc" placeholder="Product Description"><?= @$prods[0]['desc'] ?></textarea>
+                        <?php if(isset($newArr['descriptionOfprod'])) { ?>
+                        <div class="alert alert-danger">
+                            <p>*Product Description is required.</p>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-price" class="col-sm-3 control-label">Product Price</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="price" required class="form-control" id="product-price" value="<?= @$prods[0]['price'] ?>" placeholder="Product Price">
+                        <?php if(isset($newArr['price'])) { ?>
+                        <div class="alert alert-danger">
+                            <p>*Product Price is required.</p>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-availability" class="col-sm-3 control-label">Product Availability</label>
+                    <div class="col-sm-9">
+                        <select name="available" class="form-control" id="product-availability">
+                            <!-- <option disabled selected> -- Select -- </option> -->
+                            <?php if($prods[0]['aval'] == 1) { ?>
+                            <option value="Available" selected>Available</option>
+                            <option value="Not Available">Not Available</option>
+                            <?php } ?>
+                            <?php if($prods[0]['aval'] == 0) { ?>
+                                <option value="Available">Available</option>
+                                <option value="Not Available" selected>Not Available</option>
+                            <?php } ?>
+                        </select>                               
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-image" class="col-sm-3 control-label">Product Image</label>
+                    
+                    <div class="col-sm-9">
+                    <img src="../uploads/<?= $prods[0]['image'] ?>" required width="150" height="150">
+                        <br>
+                        &nbsp; <input type="file" name="imageProd" class="form-control" id="product-image">
+                                <div class="alert alert-danger">
+                                    <p> Don't forget to upload a new image or the same one!! </p>
+                                </div>
+                            <?php if(isset($newArr['image'])) { ?>
+                                <div class="alert alert-danger">
+                                    <p>*Product Image is required.</p>
+                                </div>
+                            <?php } ?>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button type="submit" name="editProd" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> Update!</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../template/assets/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../template/assets/js/bootstrap.min.js"></script>
+</body>
+</html>

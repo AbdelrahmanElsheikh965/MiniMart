@@ -1,0 +1,42 @@
+<div class="admin-panel__content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-header">
+                <h1>All Users</h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-hover table-bordered table-content">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th width="100px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php if (count($clients) > 0){ 
+                                for($i = 0; $i < count($clients); $i++){    ?>
+                    <tr>
+                        <td> <?= $clients[$i]['name'] ?> </td>
+                        <td> <?= $clients[$i]['email'] ?> </td>
+                        <td>
+                            <a href="delete.php?category=clients&id=<?= $clients[$i]['id'] ?>" class="btn btn-danger" onClick="return confirm('Are you sure you want to delete?')">Delete</a>
+                        </td>
+                    </tr>
+                                <?php } ?>
+                        <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../template/assets/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../template/assets/js/bootstrap.min.js"></script>
+</body>
+</html>

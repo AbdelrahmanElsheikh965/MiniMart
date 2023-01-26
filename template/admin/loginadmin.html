@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="Soft Masr - Project">
+        <meta name="author" content="Ahmed ElShahat">
+        <title>Admin | Minimart | Login</title>
+
+        <!-- FontAwesome -->
+        <link href="../template/assets/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- Favico -->
+        <link rel="icon" type="image/png" href="../template/assets/images/admin.png">
+        
+        <!-- Bootstrap -->
+        <link href="../template/assets/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Style -->
+        <link href="../template/assets/css/style.css" rel="stylesheet">
+    </head>
+    <body class="admin-login">
+        <div class="container">
+
+                <div class="col-md-12">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4">
+                                <div class="page-header">
+                                    <h1>Login <small>Admin Panel</small></h1>
+
+                                </div>
+                                <?php if ($resultOfLogin === "False") { ?>
+                                    <div class="alert alert-danger">
+                                        <strong>Error:</strong>
+                                            &nbsp; &nbsp; <i> Invalid <u>Email</u> Or <u>Password</u> </i> 
+                                    </div>
+                                <?php } ?>
+
+                                <form class="form-horizontal" method="post" action="login.php">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                                <input type="text" value="<?= @$_COOKIE['adminEmail']?>" class="form-control" name="em" placeholder="Email" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-key"></i></div>
+                                                <input type="password" value="<?= @$_COOKIE['adminPassword']?>" class="form-control" name="pass" placeholder="Password" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="reCokk"> Remember me
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix">
+                                        <button type="submit" name="click" class="btn btn-danger pull-right"><i class="fa fa-sign-in"></i> Sign in</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+<!-- we can write PHP code here as the whole file is included in a php file (which = login.php) -->
+<!-- edit danger notice above form and handle this page with PHP by cutting all of it in login.php then get it here in a separate file again. -->
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="../template/assets/js/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="../template/assets/js/bootstrap.min.js"></script>
+    </body>
+</html>

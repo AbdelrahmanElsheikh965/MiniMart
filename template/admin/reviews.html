@@ -1,0 +1,60 @@
+
+<div class="admin-panel__content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-header">
+                <h1>All Reviews</h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-hover table-bordered table-content">
+                <thead>
+                    <tr>
+                        <th width="150px">Review Title</th>
+                        <th>Review Content</th>
+                        <th width="100px">Client Name</th>
+                        <th>Client Email</th>
+                        <th width="90px">Date</th>
+                        <th width="50px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="revs">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    function getThem(){
+        var Req = new XMLHttpRequest();
+        Req.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                $('#revs').load('getReviews.php');
+            }
+        };
+        Req.open(
+            "GET",
+            "getReviews.php",
+            true
+        );
+        Req.send();
+    }
+
+    setInterval(function(){
+        getThem();
+    }, 800);
+
+
+    </script>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../template/assets/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../template/assets/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="Soft Masr - Project">
+        <meta name="author" content="Ahmed ElShahat">
+        <title>MiniMart - Reviews</title>
+
+        <!-- Favico -->
+        <link rel="icon" type="image/png" href="template/assets/images/shopping.png">
+        
+        <!-- FontAwesome -->
+        <link href="template/assets/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- Bootstrap -->
+        <link href="template/assets/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Style -->
+        <link href="template/assets/css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="index.html"><img src="template/assets/images/minimart-logo.png" class="img-responsive" alt=""></a>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                <li><a href="index.php"> <strong>  <?= (! isset($_SESSION['email'])) ? "Guest View" : "Dashboard  | " . $_SESSION['name'] ?>  </strong></a></li>
+                                    <li><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                                    <li><a href="all-products.php">Products</a></li>
+                                    <li class="active"><a href="reviews.php">Reviews</a></li>
+                                    <?php if (! empty($_SESSION['id'])) { ?>
+                                         <li><a href="cart.php" class="fa fa-shopping-cart"> &nbsp; Your Cart</a></li>
+                                    <?php } ?>
+                                    <?php  if(isset($_SESSION['name'])){ ?>
+                                        <li><a href="logout.php">Logout!</a></li>
+                                   <?php  }else{ ?>
+                                        <li> <a href="login.php"> <u> You can't buy as a guest! Click here to </u> ( Login ) </a></li>
+                                   <?php } ?> 
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="section-header">
+                            <h1>Reviews</h1>
+                        </div>
+                        <div class="row guestbook">
+                            <div id="loadReviews" class="col-md-12">
+
+                            <?php if(!empty($output) && $output === "True"){ ?>
+                                <div class="alert alert-success">
+                                    <p>Your feedback has been added successfully...</p>
+                                </div>
+                            <?php } ?>
+                        
+
+                            </div>
+                            <div class="col-md-12">
+                                <br /><br />
+                            </div>
+                            <div class="col-md-12">
+                                <div class="section-header">
+                                    <h1>Add new Review</h1>
+                                </div>
+                                <form class="form-horizontal" method="post" action="reviews.php">
+                                    <div class="form-group">
+                                        <label for="title" class="col-sm-3 control-label">Title</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="title" class="form-control" id="title" placeholder="Type Review Title">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="content" class="col-sm-3 control-label">Content</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" name="content" rows="6" id="content" placeholder="Type Review Content"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-9">
+                                            <button type="submit" name="add" class="btn btn-danger" 
+                                            <?php if (! isset($_SESSION['email'])) { ?> onClick="return confirm('You aren\'t signed in .. Go to login page ?')"
+                                            formaction="login.php" <?php } ?> class="btn btn-lg btn-warning"><i class="fa fa-comments"></i> Add Your Review</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+
+        function getThem(){
+            var Req = new XMLHttpRequest();
+            Req.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    $('#loadReviews').load('reviewsData.php');
+                }
+            };
+            Req.open(
+                "GET",
+                "reviewsData.php",
+                true
+            );
+            Req.send();
+        }
+
+        setInterval(function(){
+            getThem();
+        }, 500);
+
+        </script>
+
+        <div class="container-fluid footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <div class="copyrights">
+                                <span>Coded by </span><a href="http://www.arabtouch.com.eg">Arab Touch</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="template/assets/js/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="template/assets/js/bootstrap.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="Soft Masr - Project">
+        <meta name="author" content="Ahmed ElShahat">
+        <title>MiniMart - Product-info</title>
+
+        <!-- Favico -->
+        <link rel="icon" type="image/png" href="template/assets/images/shopping.png">
+
+        <!-- FontAwesome -->
+        <link href="template/assets/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- Bootstrap -->
+        <link href="template/assets/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Style -->
+        <link href="template/assets/css/style.css" rel="stylesheet">
+        <style> 
+            .alert {
+                padding: 20px;
+                background-color: green; /* Red */
+                color: white;
+                margin-bottom: 15px;
+            }
+
+            /* The close button */
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+            }
+
+            .closebtn:hover {
+                color: black;
+            }
+        </style>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?73c27e26f610eb3c9f3feb0c75b03925";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="index.php"><img src="template/assets/images/minimart-logo.png" class="img-responsive" alt=""></a>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                <li><a href="index.php"> <strong>  <?= (! isset($_SESSION['email'])) ? "Guest View" : "Dashboard  | " . $_SESSION['name'] ?>  </strong></a></li>
+                                    <li><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                                    <li class="active"><a href="all-products.php">Products</a></li>
+                                    <li><a href="reviews.php">Reviews</a></li>
+                                    <?php if (! empty($_SESSION['id'])) { ?>
+                                         <li><a href="cart.php" class="fa fa-shopping-cart"> &nbsp; Your Cart</a></li>
+                                    <?php } ?>
+                                    <?php  if(isset($_SESSION['name'])){ ?>
+                                        <li><a href="logout.php">Logout!</a></li>
+                                   <?php  }else{ ?>
+                                        <li> <a href="login.php"> <u> You can't buy as a guest! Click here to </u> ( Login ) </a></li>
+                                   <?php } ?> 
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                            <?php if(!empty($addRes) && ($addRes === "True")){ ?>
+                                <div class="alert">
+                                    <span class="closebtn" onclick="this.parentElement.style.display='none';"> &times; </span>
+                                     This product has been added successfully to your cart...
+                                </div>
+                            <?php } ?>
+
+                        <div class="section-header">
+                            <h1>Product Info</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row product-info">
+                    <div class="col-md-8">
+                        <div class="product-info__title">
+                            <h2>  <?= $thisProduct[0]['title'] ?></h2>
+                        </div>
+                        <div class="product-info__price">
+                            <strong>Product Price:</strong> <span> <?= number_format($thisProduct[0]['price'], 2); ?> <sup>$</sup></span>
+                        </div>
+                        <div class="product-info__available">
+                            <strong>Product Availability:</strong> <span><?= ($thisProduct[0]['aval'] == 1) ? "Available": "Not Available"; ?></span>
+                        </div>
+                        <div class="product-info__desc">
+                            <h2>Product Description:</h2>
+                            <p> <?= $thisProduct[0]['desc'] ?> </p>
+                            
+                        </div>
+                        <br />
+                        <form method="post">
+                            
+                            <input name="addTC" type = "submit" <?php if ($thisProduct[0]['aval'] == 0 ) { ?> disabled <?php } ?> value = "Add to cart"
+                            <?php if (! isset($_SESSION['email'])) { ?> onClick="return confirm('You aren\'t signed in .. Go to login page ?')"
+                            formaction="login.php" <?php }else{ ?> formaction="product.php?id=<?=$id?>" <?php } ?> class="btn btn-lg btn-warning">
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="product-info__image">
+                            <img src="uploads/<?= $thisProduct[0]['image'] ?>" class="img-responsive" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <div class="copyrights">
+                                <span>Coded by </span><a href="http://www.arabtouch.com.eg">Arab Touch</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="template/assets/js/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="template/assets/js/bootstrap.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="Soft Masr - Project">
+        <meta name="author" content="Ahmed ElShahat">
+        <title>MiniMart - Cart</title>
+
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    	<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	    <link rel="stylesheet" type="text/css" href="template/assets/css/cart.css">
+        <!-- FontAwesome -->
+        <link href="template/assets/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- Bootstrap -->
+        <link href="template/assets/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Style -->
+        <link href="template/assets/css/style.css" rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="index.php"><img src="template/assets/images/minimart-logo.png" class="img-responsive" alt=""></a>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                <li><a href="index.php"> <strong>  <?= (! isset($_SESSION['email'])) ? "Guest View" : "Signed in as  | " . $_SESSION['name'] ?>  </strong></a></li>
+                                    <li><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                                    <li><a href="all-products.php">Products</a></li>
+                                    <li><a href="reviews.php">Reviews</a></li>
+                                    <li class="active"><a href="cart.php" class="fa fa-shopping-cart"> &nbsp; <strong> Your Cart </strong> </a></li>
+                                    <?php   if(isset($_SESSION['name'])){ ?>
+                                        <li><a href="logout.php">Logout!</a></li>
+                                   <?php  }else{ ?>
+                                        <li> <a href="login.php"> <u> You can't buy as a guest! Click here to </u> ( Login ) </a></li>
+                                   <?php } ?> 
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <?php   if(count($myProducts) == 0){ ?>
+                <div class="col-md-12">
+                    <div class="jumbotron">
+                        <h1><i class="fa fa-warning"></i> Oops! No products. </h1>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+
+            
+            <div class="container">
+			<table id="cart" class="table table-hover table-condensed">
+    				<thead>
+						<tr>
+							<th style="width:50%">Product</th>
+							<th style="width:10%">Price</th>
+							<th style="width:8%">Amount</th>
+							<th style="width:22%"></th>
+							<th style="width:10%">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+
+                    <?php if(! empty($myProducts)) {  $sum = 0; $amounts = 0;  ?>
+                            <?php for($i=0; $i<count($myProducts); $i++) { 
+                                $sum      += $myProducts[$i]['price'] * $myProducts[$i]['amount'];
+                                $amounts  += $myProducts[$i]['amount'];
+                                $titles[]  = $myProducts[$i]['title'];
+                                ?>
+						<tr>
+							<td data-th="Product">
+								<div class="row">
+									<div class="col-sm-2 hidden-xs"><img src="uploads/<?= $myProducts[$i]['image']?>" alt="..." class="img-responsive"/></div>
+									<div class="col-sm-10">
+										<h4 class="nomargin"><?= $myProducts[$i]['title'] ?></h4>
+										<p><?= $myProducts[$i]['desc']?></p>
+									</div>
+								</div>
+							</td>
+							<td data-th="Price" class="price">$<?= number_format($myProducts[$i]['price'], 2);?></td>
+							<td data-th="Quantity">
+                            <?= $myProducts[$i]['amount']?>
+							</td>
+							<td data-th="Subtotal" class="text-center"></td>
+							<td class="actions" data-th="" class="text-center">
+								<form action="cart.php" method="post">
+                                    <input type="hidden" name="product_id" value="<?=$myProducts[$i]['id']?>">
+                                    &nbsp; &nbsp;<button type="submit" name="delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                                </form> 								
+							</td>
+						</tr>
+                                <?php } ?>
+                        <?php } ?>
+                        
+					</tbody>
+					<tfoot>
+						<tr>
+							<td><a href="all-products.php" class="btn btn-danger"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+							<td colspan="2" class="hidden-xs"></td>
+							<td class="hidden-xs text-center"><strong>Total $ <?= @number_format($sum, 2); ?> </strong></td>
+							<!-- Pass $sum of prices as hidden input. -->
+                            <form action="buy.php" method="post"> 
+                                <input type="hidden" name="sum" value="<?= @$sum ?>">
+                                <input type="hidden" name="amounts" value="<?= @$amounts ?>">
+                                <input type="hidden" name="titles" value="<?= implode(", ", @$titles) ?>">
+                            <td> <input type="submit" <?php if (count($myProducts) == 0){ ?> disabled <?php } ?> name="submit" class="btn btn-success btn-block fa fa-angle-right" value="Checkout"> </td>
+                            </form>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+
+                        
+
+                       
+
+        <div class="container-fluid footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <div class="copyrights">
+                                <span>Coded by </span><a href="http://www.arabtouch.com.eg">Arab Touch</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>               
+        <script src="template/assets/js/js.js"></script>               
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="template/assets/js/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="template/assets/js/bootstrap.min.js"></script>
+    </body>
+</html>

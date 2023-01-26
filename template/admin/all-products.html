@@ -1,0 +1,50 @@
+
+<div class="admin-panel__content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-header">
+                <h1>All Products</h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-hover table-bordered table-content">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th style="width: 440px">Product Description</th>
+                        <th style="width: 110px">Product Availability</th>
+                        <th style="width: 117px">Product Image</th>
+                        <th style="width: 140px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (count($prods) > 0){ 
+                                for($i = 0; $i < count($prods); $i++){    ?>
+                    <tr>
+                        <td class="product-name">  <?= $prods[$i]['title'] ?> </td>
+                        <td class="product-price"> <?= number_format($prods[$i]['price'],2); ?> </td>
+                        <td class="product-desc">  <?= $prods[$i]['desc'] ?> </td>
+                        <td class="product-available"> <?= ($prods[$i]['aval'] == 1) ? "Available" : "Not Available"; ?> </td>
+                        <td class="product-image"><img src="../uploads/<?= $prods[$i]['image'] ?>" alt=""></td>
+                        <td class="product-options">
+                            <a href="editProduct.php?id=<?= $prods[$i]['id'] ?>" class="btn btn-success">Edit</a>
+                            <a href="delete.php?category=products&id=<?= $prods[$i]['id'] ?>" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    <?php   }
+                        } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../template/assets/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../template/assets/js/bootstrap.min.js"></script>
+</body>
+</html>
